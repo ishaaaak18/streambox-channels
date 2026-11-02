@@ -1,0 +1,4 @@
+# Channels that refuse GitHub's US servers but play in the Arab world.
+# They are still checked and listed in the report, but never fail the run.
+الجزيرة الوثائقية
+عُمان الثقافية
