@@ -1,0 +1,42 @@
+name: Check channel links
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # every Monday 06:00 UTC
+  workflow_dispatch:
+  push:
+    paths: [free.m3u]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check every stream
+        id: check
+        continue-on-error: true
+        run: python3 scripts/check_links.py free.m3u report.md
+
+      - name: Open, update or close the broken links issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: Broken channel links
+        run: |
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+          number=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number --jq '.[0].number')
+          if [ "${{ steps.check.outcome }}" = "failure" ]; then
+            if [ -n "$number" ]; then
+              gh issue edit "$number" --body-file report.md
+            else
+              gh issue create --title "$TITLE" --body-file report.md
+            fi
+            exit 1
+          elif [ -n "$number" ]; then
+            gh issue comment "$number" --body "All channels work again."
+            gh issue close "$number"
+          fi
