@@ -1,8 +1,11 @@
 """Checks every stream in free.m3u: fetches the playlist, follows the first variant and downloads a
 segment, like a player would. Writes a Markdown report and exits 1 when any channel is broken.
 
+Channels named in scripts/geo_blocked.txt are reported but never fail the run.
+
 Usage: python scripts/check_links.py free.m3u report.md
 """
+import os
 import sys
 import time
 import urllib.request
@@ -72,11 +75,17 @@ def main():
     channels = parse(playlist)
     with ThreadPoolExecutor(8) as pool:
         results = list(pool.map(check, channels))
-    broken = [r for r in results if r[2]]
+    geo_file = os.path.join(os.path.dirname(__file__), "geo_blocked.txt")
+    geo = {l.strip() for l in open(geo_file, encoding="utf-8") if l.strip() and not l.startswith("#")}
+    blocked = [r for r in results if r[2] and r[0] in geo]
+    broken = [r for r in results if r[2] and r[0] not in geo]
     for name, url, problem in results:
         print(("BROKEN " if problem else "ok     ") + name + (f"  ({problem})" if problem else ""))
     with open(report, "w", encoding="utf-8") as f:
-        f.write(f"{len(channels) - len(broken)} of {len(channels)} channels work.\n\n")
+        f.write(f"{len(channels) - len(broken) - len(blocked)} of {len(channels)} channels work from the US.\n\n")
+        if blocked:
+            f.write("Not reachable from the US, as expected (scripts/geo_blocked.txt): "
+                    + ", ".join(r[0] for r in blocked) + "\n\n")
         if broken:
             f.write("| Channel | Problem | Link |\n|---|---|---|\n")
             for name, url, problem in broken:
