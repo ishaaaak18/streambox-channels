@@ -5,6 +5,7 @@ Channels named in scripts/geo_blocked.txt are reported but never fail the run.
 
 Usage: python scripts/check_links.py free.m3u report.md
 """
+import gzip
 import os
 import sys
 import time
@@ -17,9 +18,13 @@ ATTEMPTS = 3  # live servers hiccup; only a channel that fails every attempt is 
 
 
 def get(url, headers, limit=None):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, **headers})
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Encoding": "gzip", **headers})
     with urllib.request.urlopen(req, timeout=20) as r:
-        return r.geturl(), r.read(limit) if limit else r.read()
+        body = r.read(limit) if limit else r.read()
+        # Some servers gzip playlists even unasked; players decode that, so the check does too.
+        if not limit and body[:2] == b"\x1f\x8b":
+            body = gzip.decompress(body)
+        return r.geturl(), body
 
 
 def check_once(url, headers):
