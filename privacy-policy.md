@@ -44,7 +44,9 @@ The app is not directed at children under 13 and does not knowingly collect thei
 If this policy changes, the new version will be posted at this address with a new date.
 
 ## Contact
-Questions or requests: [open an issue](https://github.com/ishaaaak18/streambox-channels/issues) in the StreamBox public repository.
+Questions or requests:
+- **Email:** kadripro.app@gmail.com
+- [Open an issue](https://github.com/ishaaaak18/streambox-channels/issues) in the StreamBox public repository.
 
 ---
 
@@ -91,4 +93,6 @@ StreamBox IPTV Player ("التطبيق") مشغّل وسائط. **لا يوفّ�
 إن تغيّرت هذه السياسة تُنشر النسخة الجديدة في العنوان نفسه بتاريخ جديد.
 
 ## التواصل
-للأسئلة أو الطلبات: [افتح طلباً (issue)](https://github.com/ishaaaak18/streambox-channels/issues) في مستودع StreamBox العام.
+للأسئلة أو الطلبات:
+- **البريد الإلكتروني:** kadripro.app@gmail.com
+- [افتح طلباً (issue)](https://github.com/ishaaaak18/streambox-channels/issues) في مستودع StreamBox العام.

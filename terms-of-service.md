@@ -90,7 +90,7 @@ We reserve the right to update or modify these Terms at any time. Any changes wi
 ## 9. Contact Us
 
 If you have any questions, concerns, or requests regarding these Terms of Service, please contact us:
-- **Email:** ishaaaak18@gmail.com
+- **Email:** kadripro.app@gmail.com
 - **Public Issues:** [StreamBox Support Repository](https://github.com/ishaaaak18/streambox-channels/issues)
 
 ---
@@ -185,5 +185,5 @@ _آخر تحديث: 5 نوفمبر 2026_
 ## 9. الاتصال بنا
 
 لأي استفسارات أو أسئلة حول شروط الخدمة:
-- **البريد الإلكتروني:** ishaaaak18@gmail.com
+- **البريد الإلكتروني:** kadripro.app@gmail.com
 - **الدعم الفني:** [صفحة الدعم عبر GitHub](https://github.com/ishaaaak18/streambox-channels/issues)
