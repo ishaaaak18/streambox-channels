@@ -1,0 +1,27 @@
+name: Daily EPG Aggregator
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Every day at 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  build_epg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run EPG Aggregator
+        run: python3 scripts/epg_aggregator.py
+
+      - name: Commit and Push Updated EPG
+        run: |
+          git config --local user.email "kadripro.app@gmail.com"
+          git config --local user.name "StreamBox EPG Bot"
+          git add docs/epg/streambox-epg.xml.gz
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(epg): Daily EPG update [skip ci]" && git push)
