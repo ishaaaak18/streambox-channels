@@ -2,3 +2,7 @@
 # They are still checked and listed in the report, but never fail the run.
 الجزيرة الوثائقية
 عُمان الثقافية
+عُمان مباشر
+تلفزيون عُمان
+العربية Business
+الكويت العربي
